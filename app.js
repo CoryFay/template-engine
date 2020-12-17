@@ -11,10 +11,10 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 const { endianness } = require("os");
 
-
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
+// empty array where we will store all of our new objects
 const output = [];
+
+// 4 different prompt possibilities
 const starterQuestions = [
   {
     type: 'confirm',
@@ -129,6 +129,8 @@ const internQuestions = [
     default: 'University'
   }
 ]
+
+// function that is called when node is ran
 function start(){
   inquirer.prompt(starterQuestions).then((answers) =>{
     if (answers.addMore === true && answers.role === 'Manager'){
@@ -143,6 +145,8 @@ function start(){
   })
   
 }
+
+// functions here will correspond with the 'role' selected by the user
 function manager(){
   inquirer.prompt(managerQuestions).then((answers) => {
     const employee = new Manager(answers.tmName, answers.tmID, answers.tmEmail, answers.tmOfficeNum);
@@ -164,6 +168,8 @@ function intern(){
     start();
   })
 }
+
+// this will run when the user is done adding members. Also contains 'writeFile' to generate our HMTL
 function end(){
   // console.log('You are all set! Here is your team: ');
   // console.log('-----------------------------------');
@@ -176,24 +182,5 @@ function end(){
     console.log('Your page has been generated in the "output" folder.')
   })
 }
+
 start();
-  
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
